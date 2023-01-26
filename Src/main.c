@@ -180,9 +180,41 @@ int compare(const void *a, const void *b) {
 /************************    Main ********************/
 
 int main(int argc, char *argv[]) {
+    int cpt = 0;
+    int ascending;
+    ascending = 1;
+    char input[1024];
+    char output[1024];
+    char tri_type[1024] = "--avl";
+    for (cpt=0; cpt<argc; cpt++){
+        printf("%d\n",cpt);
+        // Chemin d'entrée du fichier
+        if (strcmp(argv[cpt],"-f") == 0){
+            strcpy(input,argv[cpt+1]);
+            printf("je suis dans le fichier C %s\n", input);
+        }
+        // Chemin de sortie du fichier
+        if(strcmp(argv[cpt],"-o") == 0){
+            strcpy(output,argv[cpt+1]);
+        }
+
+        // Chemin si ascendent ou descendent
+        if(strcmp(argv[cpt],"-r") == 0){
+            ascending = 0;
+        }
+        // type de d'algorithme de tri
+        if(strcmp(argv[cpt],"--tab") == 0){
+            strcpy(tri_type,"--tab");
+        }
+        if (strcmp(argv[cpt],"--abr") == 0){
+            strcpy(tri_type,"--abr");
+        }
+    }
     /************************AVL Main*********************/
-    if (strcmp(argv[1],"--avl") == 0 || argc == 1){
-        FILE *file = fopen(argv[2], "r");
+    if (strcmp(tri_type,"--avl") == 0){
+        printf("Je suis dans la boucle AVL \n");
+        printf("input :%s Ouput:%s\n",input,output);
+        FILE *file = fopen(input, "r");
         struct Node_AVL *root = NULL;
         char line[1024];
         char name[1024] = "sorted_";
@@ -196,16 +228,16 @@ int main(int argc, char *argv[]) {
         fclose(file);
         strcat(name,argv[2]);
         // Save the data in ascending order
-            saveToCSV_AVL(root, name, inOrder_AVL);
+            saveToCSV_AVL(root, output, inOrder_AVL);
 
         // Save the data in descending order
         //saveToCSV(root, "data_descending.csv", reverseInOrder);
         return 0;
     }
     /************************BST Main*********************/
-    else if (strcmp(argv[1],"--abr") == 0 ){
+    else if (strcmp(tri_type,"--abr") == 0 ){
         struct Node_BST *root = NULL;
-        FILE *file = fopen(argv[2], "r");
+        FILE *file = fopen(input, "r");
         char line[1024];
         char name[1024] = "sorted_";
         
@@ -217,13 +249,13 @@ int main(int argc, char *argv[]) {
             root = insert_BST(root, key, value);
         }
         strcat(name,argv[2]);
-        saveToCSV_BST(root, name);
+        saveToCSV_BST(root, output);
         fclose(file);
         return 0;
     }
     /*******************TAB****************************/
-    else if (strcmp(argv[1],"--tab") == 0 ){
-        FILE *file = fopen(argv[2], "r");
+    else if (strcmp(tri_type,"--tab") == 0 ){
+        FILE *file = fopen(input, "r");
         char line[1024];
         int size = 0;
         struct Data *data = NULL;
@@ -249,7 +281,7 @@ int main(int argc, char *argv[]) {
 
         // Save the data in ascending order
         strcat(name,argv[2]);
-        FILE *outfile = fopen(name, "w");
+        FILE *outfile = fopen(output, "w");
         fprintf(outfile, "%s", first_line);
         for (int i = 0; i < size; i++) {
             fprintf(outfile, "%d,%s",data[i].key,data[i].value);

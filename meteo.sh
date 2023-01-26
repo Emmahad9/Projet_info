@@ -200,6 +200,8 @@ if [ ! -z "$date_args_true" ] ; then
 fi
 
 ######mise dans le bon fichier
+echo Je fais le test ici
+echo $tri_args_true
 
 ####################################################################### MAIN ###########################################################
 for var in $data_args_true; do
@@ -207,7 +209,7 @@ for var in $data_args_true; do
         awk -F ";" 'NR==1{print $1,",Température moyenne",",Temperature maximal",",Température minimal"; next}
         NR==FNR && FNR>1{arr[$1]+=$11;count[$1]+=1;if(max[$1]<$11){max[$1]=$11;};if(!($1 in min) || (min[$1]>0+$11 && ($11 != ""))){min[$1]=0+$11;};} 
         END {for (i in arr) {print i","arr[i]/count[i]","max[i]","min[i]}}' $fichier_temp > tri_"${var:1}".csv
-        ./Src/main "$tri_args_true"  tri_"${var:1}".csv;
+        ./Src/main "$tri_args_true" -f tri_"${var:1}".csv -o sorted_tri_"${var:1}".csv
         echo Affichage des temperature t1
         #gnuplot -p -e "set datafile separator ',';set nokey; set title 'Température moyenne et la différence entre le Maximal & Minimal par Station';set nokey; set xlabel 'ID Station';set ylabel 'Temperature'; set style fill pattern 4; set autoscale; ; plot 'sorted_tri_t1.csv' using 1:2:(column(3)-column(4)) with yerrorbars, 'sorted_tri_t1.csv' using 1:2 with lines"
         gnuplot -p -e "set datafile separator ',';Shadecolor = '#80E0A080';set nokey; set title 'Température moyenne et la différence entre le Maximal & Minimal par Station';set nokey; set xlabel 'ID Station';set ylabel 'Temperature'; set autoscale; plot 'sorted_tri_t1.csv' using 1:(column(2)-(column(3)-column(4))):(column(2)+(column(3)-column(4))) with filledcurve fc rgb Shadecolor title 'Shaded error region', '' using 1:2 with lines lw 2"
@@ -220,7 +222,7 @@ for var in $data_args_true; do
         awk -F ";" 'NR==1{print $1,",Pression moyenne",",Pression maximal",",Pression minimal"; next}
         NR==FNR && FNR>1{arr[$1]+=$7;count[$1]+=1;if(max[$1]<$7){max[$1]=$7;};if(!($1 in min) || (min[$1]>0+$7 && ($7 != ""))){min[$1]=0+$7;};} 
         END {for (i in arr) {print i","arr[i]/count[i]","max[i]","min[i]}}' $fichier_temp > tri_"${var:1}".csv
-        ./Src/main "$tri_args_true"  tri_"${var:1}".csv;
+        ./Src/main "$tri_args_true" -f tri_"${var:1}".csv -o sorted_tri_"${var:1}".csv
         echo Affichage des pression p1
         gnuplot -p -e "set datafile separator ',';Shadecolor = '#80E0A080';set nokey; set title 'Pression moyenne et la différence entre le Maximal & Minimal par Station';set nokey; set xlabel 'ID Station';set ylabel 'Pression'; set autoscale; plot 'sorted_tri_p1.csv' using 1:(column(2)-(column(3)-column(4))):(column(2)+(column(3)-column(4))) with filledcurve fc rgb Shadecolor title 'Shaded error region', '' using 1:2 with lines lw 2"
         #rm $fichier_temp
@@ -230,7 +232,7 @@ for var in $data_args_true; do
     awk -F ";" 'NR==1{print $2,",Température moyenne"; next}
         NR==FNR && FNR>1{arr[$2]+=$11;count[$2]+=1;f="\\1 \\2 \\3 \\4 \\5 \\6 \\7"} 
         END {for (i in arr) {j=mktime(gensub(/(....)-(..)-(..)T(..):(..):(..)([+-].*)/, f, "g", i));print j","arr[i]/count[i]}}' $fichier_temp > tri_"${var:1}".csv
-        ./Src/main "$tri_args_true"  tri_"${var:1}".csv;
+        ./Src/main "$tri_args_true" -f tri_"${var:1}".csv -o sorted_tri_"${var:1}".csv
         awk -F, 'NR==1{print "Date",",Température moyenne"; next} NR==FNR && FNR>1{
           timestamp=$1;
           time_string=strftime("%Y-%m-%d %H:%M:%S", timestamp);
@@ -244,7 +246,7 @@ for var in $data_args_true; do
     awk -F ";" 'NR==1{print $2,",Pression moyenne"; next}
         NR==FNR && FNR>1{arr[$2]+=$7;count[$2]+=1;f="\\1 \\2 \\3 \\4 \\5 \\6 \\7"} 
         END {for (i in arr) {j=mktime(gensub(/(....)-(..)-(..)T(..):(..):(..)([+-].*)/, f, "g", i));print j","arr[i]/count[i]}}' $fichier_temp > tri_"${var:1}".csv
-        ./Src/main "$tri_args_true"  tri_"${var:1}".csv;
+        ./Src/main "$tri_args_true" -f tri_"${var:1}".csv -o sorted_tri_"${var:1}".csv
         awk -F, 'NR==1{print "Date",",Pression moyenne"; next} NR==FNR && FNR>1{
           timestamp=$1;
           time_string=strftime("%Y-%m-%d %H:%M:%S", timestamp);
@@ -269,7 +271,7 @@ for var in $data_args_true; do
         awk -F ";" 'NR==1{print $1,",",$14,",Latitude",",Longitude"; next}
         NR==FNR && FNR>1{arr[$1]=$14;split($10,a,",");lat[$1]=a[1];lon[$1]=a[2]} 
         END {for (i in arr) {print i","arr[i]","lat[i]","lon[i]}}' $fichier_temp > tri_"${var:1}".csv
-        ./Src/main "$tri_args_true"  tri_"${var:1}".csv;
+        ./Src/main "$tri_args_true" -f tri_"${var:1}".csv -o sorted_tri_"${var:1}".csv
         echo Affichage de la carte altitude
         gnuplot -p -e "set datafile separator ',' ; set nokey;set xlabel 'Longitude';set ylabel 'Latitude'; set title 'HeatMap Altitude';set view map;set autoscale fix;set pm3d at b map;set dgrid3d 200,200,1; splot 'sorted_tri_h.csv' using (column(4)):(column(3)):(column(2))"
         #rm *tri_h*
@@ -279,7 +281,7 @@ for var in $data_args_true; do
         awk -F ";" 'NR==1{print $1,",Humidité maximal",",Latitude",",Longitude"; next} 
         NR==FNR && FNR>1{if(max[$1]<$6){max[$1]=$6;};split($10,a,",");lat[$1]=a[1];lon[$1]=a[2]} 
         END {for (i in max) {print i","max[i]","lat[i]","lon[i]}}' $fichier_temp > tri_"${var:1}".csv
-        ./Src/main "$tri_args_true"  tri_"${var:1}".csv;
+        ./Src/main "$tri_args_true" -f tri_"${var:1}".csv -o sorted_tri_"${var:1}".csv
         echo Affichage de la carte humidite
         gnuplot -p -e "set datafile separator ',' ; set nokey; set xlabel 'Longitude';set ylabel 'Latitude'; set title 'HeatMap Humidité';set view map;set autoscale fix;set pm3d at b map;set dgrid3d 200,200,1; splot 'sorted_tri_m.csv' using (column(4)):(column(3)):(column(2))"
         #rm *tri_m*
@@ -290,8 +292,7 @@ for var in $data_args_true; do
         awk -F ";" 'NR==1{print $1,",Direction vent moyenne",",Vitesse vent moyenne",",Latitude",",Longitude"; next}
         NR==FNR && FNR>1{direction[$1]+=$4;count[$1]+=1;vitesse[$1]+=$5;split($10,a,",");lat[$1]=a[1];lon[$1]=a[2]} 
         END {for (i in direction) {print i","direction[i]/count[i]","vitesse[i]/count[i]","lat[i]","lon[i]}}' $fichier_temp > tri_"${var:1}".csv;
-
-        ./Src/main "$tri_args_true"  tri_"${var:1}".csv;
+        ./Src/main "$tri_args_true" -f tri_"${var:1}".csv -o sorted_tri_"${var:1}".csv
         echo Affichage de la carte des vents
         gnuplot -p -e "set datafile separator ',';set nokey;set xlabel 'Longitude';set ylabel 'Latitude';set title 'Carte des vents';xf(phi,len) = len*cos(phi/180.0*pi+pi/2);yf(phi,len) = len*sin(phi/180.0*pi+pi/2); plot 'sorted_tri_w.csv' using (column(5)):(column(4)):((xf(column(2),column(3)))):((yf(column(2),column(3)))):3 with vectors head size 2,20,60;"
         #rm *tri_w*
