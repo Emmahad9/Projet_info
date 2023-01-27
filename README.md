@@ -47,11 +47,11 @@ Le nom du fichier d’entrée doit être renseigné pour que le script puisse ac
 
 
 # Exemple de lancement du fichier
-Production des altitude (-h) & des cartes de vents (-w) aux antilles (-A) sur toute la période
+Production des altitude (-h) & des cartes de vents (-w) en France (-A) sur toute la période
 ```
-./meteo.sh -h -w -A -f data.csv
+./meteo.sh -w -F -f data.csv
 ```
-Production des temperatures moyennes, max & min (-t1) & des cartes de vents (-w) aux antilles (-A) entre le 1er Janvier 2015 & le 1er Janvier 2017 en utilisant un tri ABR
+Production des temperatures moyennes par date (-t2)  aux antilles (-A) entre le 1er Janvier 2015 & le 1er Janvier 2017 en utilisant un tri ABR
 ```
-./meteo.sh -F -f data.csv -t1 --abr -w -d 2015-01-01 2017-01-01
+./meteo.sh -F -f data.csv -t1 --abr -d 2015-01-01 2017-01-01
 ```
