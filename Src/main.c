@@ -218,7 +218,7 @@ int main(int argc, char *argv[]) {
         struct Node_AVL *root = NULL;
         char line[1024];
         char name[1024] = "sorted_";
-        //fgets(line, 1024, file); // Read and discard the first line
+        fgets(line, 1024, file); // Read and discard the first line
         while (fgets(line, 1024, file)) {
             char *first_column = strtok(line, ",");
             int key = atoi(strtok(line, ","));

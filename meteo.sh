@@ -258,7 +258,10 @@ for var in $data_args_true; do
 
     if [ $var == $temperature3 ]; then
     awk -F ";" 'NR==1{print $2,$1,$11; next}
-        NR==FNR && FNR>1{print $2,$1,$11}' $fichier_temp > tri_"${var:1}".csv
+        NR==FNR && FNR>1{f="\\1 \\2 \\3 \\4 \\5 \\6 \\7";time=mktime(gensub(/(....)-(..)-(..)T(..):(..):(..)([+-].*)/, f, "g", $2));print time","$1","$11}' $fichier_temp > tri_"${var:1}".csv
+    ./Src/main "$tri_args_true" -f tri_"${var:1}".csv -o sorted_tri_"${var:1}".csv
+    #awk -F ";" 'NR==1{print $2,$1,$11; next}
+    #    NR==FNR && FNR>1{print $2,$1,$11}' $fichier_temp > tri_"${var:1}".csv
     fi
 
     if [ $var == $pression3 ]; then
