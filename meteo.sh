@@ -271,7 +271,7 @@ for var in $data_args_true; do
         awk -F ";" 'NR==1{print $1,",",$14,",Latitude",",Longitude"; next}
         NR==FNR && FNR>1{arr[$1]=$14;split($10,a,",");lat[$1]=a[1];lon[$1]=a[2]} 
         END {for (i in arr) {print i","arr[i]","lat[i]","lon[i]}}' $fichier_temp > tri_"${var:1}".csv
-        ./Src/main "$tri_args_true" -f tri_"${var:1}".csv -o sorted_tri_"${var:1}".csv
+        ./Src/main "$tri_args_true" -f tri_"${var:1}".csv -o sorted_tri_"${var:1}".csv -r
         echo Affichage de la carte altitude
         gnuplot -p -e "set datafile separator ',' ; set nokey;set xlabel 'Longitude';set ylabel 'Latitude'; set title 'HeatMap Altitude';set view map;set autoscale fix;set pm3d at b map;set dgrid3d 200,200,1; splot 'sorted_tri_h.csv' using (column(4)):(column(3)):(column(2))"
         #rm *tri_h*
@@ -281,7 +281,7 @@ for var in $data_args_true; do
         awk -F ";" 'NR==1{print $1,",Humidité maximal",",Latitude",",Longitude"; next} 
         NR==FNR && FNR>1{if(max[$1]<$6){max[$1]=$6;};split($10,a,",");lat[$1]=a[1];lon[$1]=a[2]} 
         END {for (i in max) {print i","max[i]","lat[i]","lon[i]}}' $fichier_temp > tri_"${var:1}".csv
-        ./Src/main "$tri_args_true" -f tri_"${var:1}".csv -o sorted_tri_"${var:1}".csv
+        ./Src/main "$tri_args_true" -f tri_"${var:1}".csv -o sorted_tri_"${var:1}".csv -r
         echo Affichage de la carte humidite
         gnuplot -p -e "set datafile separator ',' ; set nokey; set xlabel 'Longitude';set ylabel 'Latitude'; set title 'HeatMap Humidité';set view map;set autoscale fix;set pm3d at b map;set dgrid3d 200,200,1; splot 'sorted_tri_m.csv' using (column(4)):(column(3)):(column(2))"
         #rm *tri_m*
@@ -300,5 +300,5 @@ for var in $data_args_true; do
     fi
 
 done
-
+rm $fichier_temp
 exit 0

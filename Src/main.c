@@ -192,7 +192,6 @@ int main(int argc, char *argv[]) {
     char output[1024];
     char tri_type[1024] = "--avl";
     for (cpt=0; cpt<argc; cpt++){
-        printf("%d\n",cpt);
         // Chemin d'entrée du fichier
         if (strcmp(argv[cpt],"-f") == 0){
             strcpy(input,argv[cpt+1]);
