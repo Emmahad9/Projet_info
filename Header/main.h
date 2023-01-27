@@ -4,7 +4,7 @@
 /******BST****/
 struct Node_BST;
 struct Node_BST* insert_BST(struct Node_BST* node, int key, char *value);
-void saveToCSV_BST(struct Node_BST *root, char *filename);
+void saveToCSV_BST(struct Node_BST *root, char *filename, int ascending);
 void inOrder_BST(struct Node_BST *root, FILE *outfile);
 void reverseInOrder_BST(struct Node_BST *root, FILE *outfile);
 

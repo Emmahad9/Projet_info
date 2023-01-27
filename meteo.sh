@@ -199,9 +199,6 @@ if [ ! -z "$date_args_true" ] ; then
     fi
 fi
 
-######mise dans le bon fichier
-echo Je fais le test ici
-echo $tri_args_true
 
 ####################################################################### MAIN ###########################################################
 for var in $data_args_true; do

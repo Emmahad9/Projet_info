@@ -45,9 +45,14 @@ void reverseInOrder_BST(struct Node_BST *root, FILE *outfile) {
 }
 
 
-void saveToCSV_BST(struct Node_BST *root, char *filename) {
+void saveToCSV_BST(struct Node_BST *root, char *filename, int ascending) {
     FILE *outfile = fopen(filename, "w");
-    inOrder_BST(root, outfile);
+    if (ascending == 0){
+        reverseInOrder_BST(root, outfile);
+    }
+    else{
+        inOrder_BST(root, outfile);
+    }
     fclose(outfile);
 }
 
@@ -191,7 +196,6 @@ int main(int argc, char *argv[]) {
         // Chemin d'entrée du fichier
         if (strcmp(argv[cpt],"-f") == 0){
             strcpy(input,argv[cpt+1]);
-            printf("je suis dans le fichier C %s\n", input);
         }
         // Chemin de sortie du fichier
         if(strcmp(argv[cpt],"-o") == 0){
@@ -212,13 +216,11 @@ int main(int argc, char *argv[]) {
     }
     /************************AVL Main*********************/
     if (strcmp(tri_type,"--avl") == 0){
-        printf("Je suis dans la boucle AVL \n");
-        printf("input :%s Ouput:%s\n",input,output);
         FILE *file = fopen(input, "r");
         struct Node_AVL *root = NULL;
         char line[1024];
         char name[1024] = "sorted_";
-        fgets(line, 1024, file); // Read and discard the first line
+        //fgets(line, 1024, file); // Read and discard the first line
         while (fgets(line, 1024, file)) {
             char *first_column = strtok(line, ",");
             int key = atoi(strtok(line, ","));
@@ -228,8 +230,12 @@ int main(int argc, char *argv[]) {
         fclose(file);
         strcat(name,argv[2]);
         // Save the data in ascending order
+        if (ascending == 0){
             saveToCSV_AVL(root, output, inOrder_AVL);
-
+        }
+        else{
+        saveToCSV_AVL(root, output, reverseInOrder_AVL);
+        }
         // Save the data in descending order
         //saveToCSV(root, "data_descending.csv", reverseInOrder);
         return 0;
@@ -249,7 +255,7 @@ int main(int argc, char *argv[]) {
             root = insert_BST(root, key, value);
         }
         strcat(name,argv[2]);
-        saveToCSV_BST(root, output);
+        saveToCSV_BST(root, output,ascending);
         fclose(file);
         return 0;
     }
@@ -283,8 +289,15 @@ int main(int argc, char *argv[]) {
         strcat(name,argv[2]);
         FILE *outfile = fopen(output, "w");
         fprintf(outfile, "%s", first_line);
-        for (int i = 0; i < size; i++) {
-            fprintf(outfile, "%d,%s",data[i].key,data[i].value);
+        if (ascending == 0){
+            for (int i = size - 1; i >= 0; i--){
+            fprintf(outfile, "%s", data[i].value);
+            }
+        }
+        else{
+            for (int i = 0; i < size; i++) {
+                fprintf(outfile, "%d,%s",data[i].key,data[i].value);
+            }
         }
         fclose(outfile);
 
