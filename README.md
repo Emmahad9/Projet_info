@@ -1,8 +1,8 @@
 # Introduction
-Developpement d'un projet de traitement de données météorologique en Bash avec tri fait par un programme C (Tri via ABR, AVL, ou lineaire).
+Developpement d'un projet de traitement de données météorologiques en Bash avec tri fait par un programme C (Tri via ABR, AVL, ou lineaire).
 
 # Objectif du Projet
-L'utilisateur vas lancer le programme en donnant le fichier de données en entrée et en spécifiant plusieurs arguments concernant le type de données météorologiques qu'ils souhaite visualiser, la localisation, les dates, le type de structure pour trier les données (voir ci-dessous les arguments disponibles)
+L'utilisateur va lancer le programme en donnant le fichier de données en entrée et en spécifiant plusieurs arguments concernant le type de données météorologiques qu'il souhaite visualiser, la localisation, les dates, le type de structure pour trier les données (voir ci-dessous les arguments disponibles)
 
 # Les arguments :
 ## Type de données météorologiques
@@ -34,7 +34,7 @@ Il est possible d’indiquer un intervalle temporel pour filtrer les données de
 les données de sortie sont dans l’intervalle de dates [<min>..<max>] incluses. Le format des dates est une chaine de type YYYY-MM-DD (année-mois-jour).
 
 ## Specifications de tris :
-Il est possible d’imposer le mode de tri des données : soit à l’aide d’un tableau (ou liste chaînée), soit à l’aide d’une structure d’arbre binaire,ABR ou AVL.
+Il est possible d’imposer le mode de tri des données : soit à l’aide d’un tableau (ou liste chaînée), soit à l’aide d’une structure d’arbre binaire, ABR ou AVL.
 Si aucune option de tri n’est activée, par défaut le tri se fera à l’aide d’un AVL qui sera la plus efficace.
 - --tab : tri effectué à l’aide d’une structure linéaire (au choix un tableau
 ou une liste chaînée)
@@ -47,7 +47,7 @@ Le nom du fichier d’entrée doit être renseigné pour que le script puisse ac
 
 
 # Exemple de lancement du fichier
-Production des altitude (-h) & des cartes de vents (-w) en France (-A) sur toute la période
+Production des altitudes (-h) & des cartes de vents (-w) en France (-A) sur toute la période
 ```
 ./meteo.sh -w -F -f data.csv
 ```
