@@ -81,26 +81,20 @@ int max(int a, int b) {
 struct Node_AVL *rightRotate(struct Node_AVL *y) {
     struct Node_AVL *x = y->left;
     struct Node_AVL *T2 = x->right;
-
     x->right = y;
     y->left = T2;
-
     y->height = max(height(y->left), height(y->right)) + 1;
     x->height = max(height(x->left), height(x->right)) + 1;
-
     return x;
 }
 
 struct Node_AVL *leftRotate(struct Node_AVL *x) {
     struct Node_AVL *y = x->right;
     struct Node_AVL *T2 = y->left;
-
     y->left = x;
     x->right = T2;
-
     x->height = max(height(x->left), height(x->right)) + 1;
     y->height = max(height(y->left), height(y->right)) + 1;
-
     return y;
 }
 
@@ -186,8 +180,7 @@ int compare(const void *a, const void *b) {
 
 int main(int argc, char *argv[]) {
     int cpt = 0;
-    int ascending;
-    ascending = 1;
+    int ascending = 1;
     char input[1024];
     char output[1024];
     char tri_type[1024] = "--avl";
@@ -233,7 +226,7 @@ int main(int argc, char *argv[]) {
             saveToCSV_AVL(root, output, inOrder_AVL);
         }
         else{
-        saveToCSV_AVL(root, output, reverseInOrder_AVL);
+            saveToCSV_AVL(root, output, reverseInOrder_AVL);
         }
         // Save the data in descending order
         //saveToCSV(root, "data_descending.csv", reverseInOrder);
@@ -290,7 +283,7 @@ int main(int argc, char *argv[]) {
         fprintf(outfile, "%s", first_line);
         if (ascending == 0){
             for (int i = size - 1; i >= 0; i--){
-            fprintf(outfile, "%s", data[i].value);
+                fprintf(outfile, "%s", data[i].value);
             }
         }
         else{
