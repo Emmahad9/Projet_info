@@ -47,7 +47,7 @@ Le nom du fichier d’entrée doit être renseigné pour que le script puisse ac
 
 
 # Exemple de lancement du fichier
-Avant tout il faut telecharger gnuplot sur votre terminal avec les commandes suivantes
+Avant tout il faut télécharger "gnuplot" sur votre terminal à l'aide des commandes suivantes
 ```
 sudo apt-get update
 sudo apt-get install gnuplot
