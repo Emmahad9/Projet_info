@@ -52,6 +52,10 @@ Avant tout il faut télécharger "gnuplot" sur votre terminal à l'aide des comm
 sudo apt-get update
 sudo apt-get install gnuplot
 ```
+Il est aussi nécessaire d'avoir la fonction gawk à jour. Si ce n'est pas le cas téléchargez-la à l'aide de la commande suivante
+```
+sudo apt-get install gawk
+```
 Production des altitudes (-h) & des cartes de vents (-w) en France (-A) sur toute la période
 ```
 ./meteo.sh -w -F -f data.csv
