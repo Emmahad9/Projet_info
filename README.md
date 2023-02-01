@@ -47,7 +47,7 @@ Le nom du fichier d’entrée doit être renseigné pour que le script puisse ac
 
 
 # Exemple de lancement du fichier
-Dès que vous avez téléchargé le projet, n'oubliez pas de telecharger le document data.csv et de la rajouter au dossier pour compiler, veuillez penser à compiler ou le dossier data.csv est enregistré (se rendre dans le chemin grâce à la commande "cd") 
+Dès que vous avez téléchargé le projet, n'oubliez pas de telecharger le document data.csv et de le rajouter au dossier pour compiler. Veuillez penser à compiler où le dossier data.csv est enregistré (se rendre dans le chemin grâce à la commande "cd") 
  
 Avant tout il faut télécharger "gnuplot" sur votre terminal à l'aide des commandes suivantes
 ```
