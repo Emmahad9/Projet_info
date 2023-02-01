@@ -56,7 +56,7 @@ Il est aussi nécessaire d'avoir la fonction gawk à jour. Si ce n'est pas le ca
 ```
 sudo apt-get install gawk
 ```
-Production des altitudes (-h) & des cartes de vents (-w) en France (-A) sur toute la période
+Production des altitudes (-h) & des cartes de vents (-w) en France (-F) sur toute la période
 ```
 ./meteo.sh -w -F -f data.csv
 ```
