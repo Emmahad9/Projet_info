@@ -52,7 +52,7 @@ Avant tout il faut télécharger "gnuplot" sur votre terminal à l'aide des comm
 sudo apt-get update
 sudo apt-get install gnuplot
 ```
-Il est aussi nécessaire d'avoir la fonction gawk à jour. Si ce n'est pas le cas téléchargez-la à l'aide de la commande suivante
+Il est aussi nécessaire d'avoir la fonction gawk à jour. Si ce n'est pas le cas, téléchargez-la à l'aide de la commande suivante
 ```
 sudo apt-get install gawk
 ```
