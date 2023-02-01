@@ -47,6 +47,11 @@ Le nom du fichier d’entrée doit être renseigné pour que le script puisse ac
 
 
 # Exemple de lancement du fichier
+Avant tout il faut telecharger gnuplot sur votre terminal avec les commandes suivantes
+```
+sudo apt-get update
+sudo apt-get install gnuplot
+```
 Production des altitudes (-h) & des cartes de vents (-w) en France (-A) sur toute la période
 ```
 ./meteo.sh -w -F -f data.csv
