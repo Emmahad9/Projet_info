@@ -47,6 +47,8 @@ Le nom du fichier d’entrée doit être renseigné pour que le script puisse ac
 
 
 # Exemple de lancement du fichier
+Dès que vous avez téléchargé le projet, n'oubliez pas de telecharger le document data.csv et de la rajouter au dossier pour compiler, veuillez penser à compiler ou le dossier data.csv est enregistré (se rendre dans le chemin grâce à la commande "cd") 
+```
 Avant tout il faut télécharger "gnuplot" sur votre terminal à l'aide des commandes suivantes
 ```
 sudo apt-get update
@@ -60,7 +62,7 @@ Production des altitudes (-h) & des cartes de vents (-w) en France (-F) sur tout
 ```
 ./meteo.sh -w -F -f data.csv
 ```
-Production des temperatures moyennes par date (-t2)  aux antilles (-A) entre le 1er Janvier 2015 & le 1er Janvier 2017 en utilisant un tri ABR
+Production des temperatures moyennes par date (-t2)  aux antilles (-F) entre le 1er Janvier 2015 & le 1er Janvier 2017 en utilisant un tri ABR
 ```
 ./meteo.sh -F -f data.csv -t1 --abr -d 2015-01-01 2017-01-01
 ```
