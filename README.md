@@ -64,5 +64,5 @@ Production des altitudes (-h) & des cartes de vents (-w) en France (-F) sur tout
 ```
 Production des temperatures moyennes par date (-t2)  aux antilles (-A) entre le 1er Janvier 2015 & le 1er Janvier 2017 en utilisant un tri ABR
 ```
-./meteo.sh -A -f data.csv -t1 --abr -d 2015-01-01 2017-01-01
+./meteo.sh -A -f data.csv -t2 --abr -d 2015-01-01 2017-01-01
 ```
