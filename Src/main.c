@@ -5,12 +5,14 @@
 
 /************************ BST ************************************/
 
+//structure of a node 
 struct Node_BST {
     int key;
     char *value;
     struct Node_BST *left, *right;
 };
 
+//create a node
 struct Node_BST* newNode_BST(int key, char *value) {
     struct Node_BST* node = (struct Node_BST*)malloc(sizeof(struct Node_BST));
     node->key = key;
@@ -19,6 +21,7 @@ struct Node_BST* newNode_BST(int key, char *value) {
     return node;
 }
 
+//insert a node
 struct Node_BST* insert_BST(struct Node_BST* node, int key, char *value) {
     if (node == NULL) return newNode_BST(key, value);
     if (key < node->key)
@@ -28,6 +31,7 @@ struct Node_BST* insert_BST(struct Node_BST* node, int key, char *value) {
     return node;
 }
 
+//infixed path of the tree
 void inOrder_BST(struct Node_BST *root, FILE *outfile) {
     if (root != NULL) {
         inOrder_BST(root->left, outfile);
@@ -36,7 +40,7 @@ void inOrder_BST(struct Node_BST *root, FILE *outfile) {
     }
 }
 
-
+//infixed reverse tree path
 void reverseInOrder_BST(struct Node_BST *root, FILE *outfile) {
     if (root != NULL) {
         reverseInOrder_BST(root->right, outfile);
@@ -45,7 +49,7 @@ void reverseInOrder_BST(struct Node_BST *root, FILE *outfile) {
     }
 }
 
-
+//save the sorted data to a file
 void saveToCSV_BST(struct Node_BST *root, char *filename, int ascending) {
     FILE *outfile = fopen(filename, "w");
     if (ascending == 0){
@@ -60,6 +64,7 @@ void saveToCSV_BST(struct Node_BST *root, char *filename, int ascending) {
 
 /************************ AVL ************************************/
 
+//structure of a node
 struct Node_AVL {
     int key;
     char *value;
@@ -68,17 +73,19 @@ struct Node_AVL {
     int height;
 };
 
-
+//determining the height of a node
 int height(struct Node_AVL *node) {
     if (node == NULL)
         return 0;
     return node->height;
 }
 
+//determination of the max between two values
 int max(int a, int b) {
     return (a > b) ? a : b;
 }
 
+//right rotation
 struct Node_AVL *rightRotate(struct Node_AVL *y) {
     struct Node_AVL *x = y->left;
     struct Node_AVL *T2 = x->right;
@@ -89,6 +96,7 @@ struct Node_AVL *rightRotate(struct Node_AVL *y) {
     return x;
 }
 
+//left rotation
 struct Node_AVL *leftRotate(struct Node_AVL *x) {
     struct Node_AVL *y = x->right;
     struct Node_AVL *T2 = y->left;
@@ -99,12 +107,14 @@ struct Node_AVL *leftRotate(struct Node_AVL *x) {
     return y;
 }
 
+//balancing factor
 int getBalance(struct Node_AVL *node) {
     if (node == NULL)
         return 0;
     return height(node->left) - height(node->right);
 }
 
+//create a node
 struct Node_AVL* newNode_AVL(int key, char *value) {
     struct Node_AVL* node = (struct Node_AVL*) malloc(sizeof(struct Node_AVL));
     node->key = key;
@@ -115,6 +125,7 @@ struct Node_AVL* newNode_AVL(int key, char *value) {
     return node;
 }
 
+//insert a node
 struct Node_AVL* insert_AVL(struct Node_AVL* node, int key, char *value) {
     if (node == NULL)
         return newNode_AVL(key, value);
@@ -141,6 +152,7 @@ struct Node_AVL* insert_AVL(struct Node_AVL* node, int key, char *value) {
     return node;
 }
 
+//infixed path of the tree
 void inOrder_AVL(struct Node_AVL *root, FILE *file) {
     if (root != NULL) {
         inOrder_AVL(root->left, file);
@@ -149,6 +161,7 @@ void inOrder_AVL(struct Node_AVL *root, FILE *file) {
     }
 }
 
+//infixed reverse tree path
 void reverseInOrder_AVL(struct Node_AVL *root, FILE *file) {
     if (root != NULL) {
         reverseInOrder_AVL(root->right, file);
@@ -157,6 +170,7 @@ void reverseInOrder_AVL(struct Node_AVL *root, FILE *file) {
     }
 }
 
+//save the sorted data to a file
 void saveToCSV_AVL(struct Node_AVL *root, char *filename, void (*traverse)(struct Node_AVL *, FILE *)) {
     FILE *outfile = fopen(filename, "w");
     traverse(root, outfile);
@@ -165,6 +179,7 @@ void saveToCSV_AVL(struct Node_AVL *root, char *filename, void (*traverse)(struc
 
 /**************************** Tab ****************/
 
+//structure of the table data
 struct Data {
     int key;
     char *value;
@@ -214,6 +229,7 @@ int main(int argc, char *argv[]) {
         char line[1024];
         char name[1024] = "sorted_";
         //fgets(line, 1024, file); // Read and discard the first line
+        //read the file line by line
         while (fgets(line, 1024, file)) {
             char *first_column = strtok(line, ",");
             int key = atoi(strtok(line, ","));
@@ -239,8 +255,8 @@ int main(int argc, char *argv[]) {
         FILE *file = fopen(input, "r");
         char line[1024];
         char name[1024] = "sorted_";
-        
         //fgets(line, 1024, file); // Read and discard the first line
+        //read the file line by line
         while (fgets(line, 1024, file)) {
             char *first_column = strtok(line, ",");
             int key = atoi(first_column);
@@ -261,6 +277,7 @@ int main(int argc, char *argv[]) {
         char *first_line = NULL;
         char name[1024] = "sorted_";
         int i = 0;
+        //read the file line by line
         while (fgets(line, 1024, file)) { //fgets = allows you to read the content of a string from a
             if (i == 0) {
                 first_line = strdup(line);// strdup = allocates a new memory area via the malloc function in order to copy the initial string
@@ -276,6 +293,7 @@ int main(int argc, char *argv[]) {
             size++;
         }
         fclose(file);
+        //sorting of table data
         qsort(data, size, sizeof(struct Data), compare); // sort = sort the dates given automatically 
 
         // Save the data in ascending order
