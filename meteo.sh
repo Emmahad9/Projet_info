@@ -198,7 +198,7 @@ if [ ! -z "$date_args_true" ] ; then
       awk -v date_1="$date_1" -v date_2="$date_2" -F ";" 'NR==1{print $0; next} NR==FNR && FNR>1{f="\\1 \\2 \\3 \\4 \\5 \\6 \\7";inf=mktime(gensub(/(....)-(..)-(..) (..):(..):(..)/, "\\1 \\2 \\3 \\4 \\5 \\6", "g", date_1));sup=mktime(gensub(/(....)-(..)-(..) (..):(..):(..)/, "\\1 \\2 \\3 \\4 \\5 \\6", "g", date_2));a=mktime(gensub(/(....)-(..)-(..)T(..):(..):(..)([+-].*)/, f, "g", $2));if(a>inf && a<sup) {print $0}}' $fichier > $fichier_temp   
     fi
 fi
-
+###mktime = transform ##
 
 ####################################################################### MAIN ###########################################################
 for var in $data_args_true; do
