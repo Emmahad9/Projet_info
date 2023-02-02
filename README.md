@@ -70,4 +70,4 @@ Cependant, si vous rencontrez des difficultés pour compiler aidez-vous de l'opt
 ```
 ./meteo.sh --help
 ```
-elle vous permettra d'obtenir l'affichage d'un aide détaillé à l'utilisation du script. Dès que vous n'en aurez plus l'utilité il vous suffira d'appuyer sur la touche "q" de votre clavier pour recompiler
+Elle vous permettra d'obtenir l'affichage d'un aide détaillé à l'utilisation du script. Dès que vous n'en aurez plus l'utilité, il vous suffira d'appuyer sur la touche "q" de votre clavier pour recompiler
