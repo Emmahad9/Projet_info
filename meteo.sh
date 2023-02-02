@@ -15,7 +15,7 @@ altitude='-h'
 humidite='-m'
 all_args=$*
 
-#Trier les arguments
+#Sorting the arguments
 
 data_args="-t1 -t2 -t3 -p1 -p2 -p3 -w -h -m "
 geo_args="-F -G -S -A -O -Q"
@@ -61,35 +61,35 @@ Q_long_min=-180
 Q_lat_max=-60
 Q_long_max=180
 
-##### Compiler tous les fichier C ###
+##### Compile all C files ###
 if [ ! -e Src/main ]; then
     echo Lancement de la compilation
     (cd Src && make && echo Compilation finie);
 fi
 
 
-###Identification des arguments###
+###Identification of arguments###
 for ((var=1;var<= $#;var++)); #var in $all_args;
     do
-    ######## Argument de données ####
+    ######## Data argument ####
     if [[ $data_args =~ (^|[[:space:]])${!var}($|[[:space:]]) ]]; then 
     data_args_true+=(${!var})
     fi
-    ######## Argument géographique ####
+    ######## Geographical argument####
     if [[ $geo_args =~ (^|[[:space:]])${!var}($|[[:space:]]) ]]; then 
     geo_args_true+=(${!var})
     fi
-    ######## Argument de tri ####
+    ######## Sorting argument ####
     if [[ $tri_args =~ (^|[[:space:]])${!var}($|[[:space:]]) ]]; then 
     tri_args_true+=(${!var})
     fi
-    ######## Argument du fichier ####
+    ######## File argument ####
     if [[ $file_args =~ (^|[[:space:]])${!var}($|[[:space:]]) ]]; then
     file=$((var+1))
     fichier=${!file}
     file_args_true+=(${!var})
     fi
-    ######## Argument de date ####
+    ######## Date argument ####
     if [[ $date_args =~ (^|[[:space:]])${!var}($|[[:space:]]) ]]; then
     idx_1=$((var+1))
     idx_2=$((var+2))
@@ -98,14 +98,14 @@ for ((var=1;var<= $#;var++)); #var in $all_args;
     HH=" 00:00:00"
     date_1="$date_1_YY$HH"
     date_2="$date_2_YY$HH"
-    ######Verifier si les dates au bons format####
+    ######Check if the dates are in the right format####
     if [[ ($date_1 =~ ^[0-9]{4}-[0-1][0-9]-[0-3][0-9]\ [0-2][0-9]:[0-5][0-9]:[0-5][0-9]$  &&  $date_2 =~ ^[0-9]{4}-[0-1][0-9]-[0-3][0-9]\ [0-2][0-9]:[0-5][0-9]:[0-5][0-9]$)]] ; then
       echo 
     else 
       echo "Les date ne sont pas au format. Veuillez utiliser -d YYYY-MM-DD HH-mm-SS "
       exit 1
     fi
-    ############Vérifier si les dates sont dans l'ordre###################""
+    ############Check that the dates are in order###################""
     date1_seconds=$(date -d "$date_1" +%s)
     date2_seconds=$(date -d "$date_2" +%s)
     if [[ $date1_seconds -gt $date2_seconds ]]; then
@@ -117,7 +117,7 @@ for ((var=1;var<= $#;var++)); #var in $all_args;
     fi
 done
 
-##############Verification###################
+##############Check###################
 if [ ! -e $fichier ] || [ -z $fichier ];then
   echo "Ce fichier n'existe pas ! Reessayer avec le bon fichier"
   exit 1
@@ -143,10 +143,10 @@ if [ ${#file_args_true[@]} -gt 1 ];then
   exit 1
 fi
 
-#### Création d'un fichier temporaire pour stocker
+#### Creating a temporary file to store
 cp $fichier $fichier_temp
 
-##############################Fonction argument de tri######
+##############################Sorting argument function######
 launch_file() {
   echo "Trie en cours..."
   if [ "$1" == "--tab" ]; then
@@ -164,7 +164,7 @@ launch_file() {
 
 
 
-#######FILTER PAR LE LIEU####
+#######Filter by location ####
 
 for var_geo in $geo_args_true;
 do
@@ -188,7 +188,7 @@ do
 done
 
 
-##############Filter par la date ################
+##############Filter by date ################
 if [ ! -z "$date_args_true" ] ; then
     echo Filtrage temporel en cours...
     if [ ! -z "$geo_args_true" ]; then
@@ -214,7 +214,7 @@ for var in $data_args_true; do
         #rm *tri_t1*
     fi
 
-    #souci sur le minimum toujours : Voir comment faire ?
+    #we have a problem with the minimum 
     if [ $var == $pression1 ]; then
         awk -F ";" 'NR==1{print $1,",Pression moyenne",",Pression maximal",",Pression minimal"; next}
         NR==FNR && FNR>1{arr[$1]+=$7;count[$1]+=1;if(max[$1]<$7){max[$1]=$7;};if(!($1 in min) || (min[$1]>0+$7 && ($7 != ""))){min[$1]=0+$7;};} 
