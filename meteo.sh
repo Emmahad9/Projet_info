@@ -105,7 +105,7 @@ for ((var=1;var<= $#;var++)); #var in $all_args;
       echo "Les date ne sont pas au format. Veuillez utiliser -d YYYY-MM-DD HH-mm-SS "
       exit 1
     fi
-    ############Check that the dates are in order###################""
+    ############Check that the dates are in order###################
     date1_seconds=$(date -d "$date_1" +%s)
     date2_seconds=$(date -d "$date_2" +%s)
     if [[ $date1_seconds -gt $date2_seconds ]]; then
