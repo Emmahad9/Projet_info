@@ -62,6 +62,10 @@ Q_lat_max=-60
 Q_long_max=180
 
 ##### Compile all C files ###
+if [ $# == 1 ] && [ "$1" == "--help" ]; then
+    less README.md
+    exit 1
+fi
 if [ ! -e Src/main ]; then
     echo Lancement de la compilation
     (cd Src && make && echo Compilation finie);
