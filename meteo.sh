@@ -198,10 +198,10 @@ if [ ! -z "$date_args_true" ] ; then
       awk -v date_1="$date_1" -v date_2="$date_2" -F ";" 'NR==1{print $0; next} NR==FNR && FNR>1{f="\\1 \\2 \\3 \\4 \\5 \\6 \\7";inf=mktime(gensub(/(....)-(..)-(..) (..):(..):(..)/, "\\1 \\2 \\3 \\4 \\5 \\6", "g", date_1));sup=mktime(gensub(/(....)-(..)-(..) (..):(..):(..)/, "\\1 \\2 \\3 \\4 \\5 \\6", "g", date_2));a=mktime(gensub(/(....)-(..)-(..)T(..):(..):(..)([+-].*)/, f, "g", $2));if(a>inf && a<sup) {print $0}}' $fichier > $fichier_temp   
     fi
 fi
-##NB##
-###mktime = prend en entrée un format de date et retourne le nombre de secondes écoulées de 1970, comparer des dates ##
-###gensub = permet de changer le format des dates ##
-## awk est une fonction de shell qui permet de traiter les fichiers csv lignes par lignes, l'option -F permet de definir le séparateur #
+##NotaBene##
+###mktime = takes a date format as input and returns the number of elapsed seconds from 1970, compare dates ##
+###gensub = allows you to change the date format ##
+## awk is a shell function that processes csv files line by line, the -F option sets the separator #
 ####################################################################### MAIN ###########################################################
 # We are going to loop over all the data argument & apply the correct set of command  
 for var in $data_args_true; do
