@@ -66,3 +66,8 @@ Production des temperatures moyennes par date (-t2)  aux antilles (-A) entre le 
 ```
 ./meteo.sh -A -f data.csv -t2 --abr -d 2015-01-01 2017-01-01
 ```
+Cependant, si vous rencontrez des difficultés pour compiler aider-vous de l'option suivant 
+```
+./meteo.sh --help
+```
+elle vous permettra d'obtenir l'affichage d'un aide détaillé à l'utilisation du script. Dès que vous n'en aurez plus l'utilité il vous suffira d'appuyer sur la touche "q" de votre clavier pour recompiler
