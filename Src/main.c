@@ -3,6 +3,7 @@
 #include <string.h>
 #include "../Header/main.h"
 
+/************************ BST ************************************/
 
 struct Node_BST {
     int key;
@@ -185,20 +186,20 @@ int main(int argc, char *argv[]) {
     char output[1024];
     char tri_type[1024] = "--avl";
     for (cpt=0; cpt<argc; cpt++){
-        // Chemin d'entrée du fichier
+        // Input path of the file
         if (strcmp(argv[cpt],"-f") == 0){
             strcpy(input,argv[cpt+1]);
         }
-        // Chemin de sortie du fichier
+        // Output path of the file
         if(strcmp(argv[cpt],"-o") == 0){
             strcpy(output,argv[cpt+1]);
         }
 
-        // Chemin si ascendent ou descendent
+        // Path if ascending or descending
         if(strcmp(argv[cpt],"-r") == 0){
             ascending = 0;
         }
-        // type de d'algorithme de tri
+        // type of sorting algorithm
         if(strcmp(argv[cpt],"--tab") == 0){
             strcpy(tri_type,"--tab");
         }
@@ -220,7 +221,7 @@ int main(int argc, char *argv[]) {
             root = insert_AVL(root, key, value);
         }
         fclose(file);
-        strcat(name,argv[2]);
+        strcat(name,argv[2]); // strcat = allows you to add to an existing string the content of a second
         // Save the data in ascending order
         if (ascending == 0){
             saveToCSV_AVL(root, output, inOrder_AVL);
@@ -252,7 +253,7 @@ int main(int argc, char *argv[]) {
         return 0;
     }
     /*******************TAB****************************/
-    else if (strcmp(tri_type,"--tab") == 0 ){
+    else if (strcmp(tri_type,"--tab") == 0 ){ // strcmp = allows you to compare two strings
         FILE *file = fopen(input, "r");
         char line[1024];
         int size = 0;
@@ -260,22 +261,22 @@ int main(int argc, char *argv[]) {
         char *first_line = NULL;
         char name[1024] = "sorted_";
         int i = 0;
-        while (fgets(line, 1024, file)) {
+        while (fgets(line, 1024, file)) { //fgets = allows you to read the content of a string from a
             if (i == 0) {
-                first_line = strdup(line);
+                first_line = strdup(line);// strdup = allocates a new memory area via the malloc function in order to copy the initial string
                 i++;
                 continue;
             }
-            data = realloc(data, (size + 1) * sizeof(struct Data));
+            data = realloc(data, (size + 1) * sizeof(struct Data)); //realloc = allows you to dynamically allocate memory
             char *first_column = strtok(line, ",");
-            int key = atoi(strtok(line, ","));
+            int key = atoi(strtok(line, ",")); //atoi = transforms a string into a numeric value
             char *value = strdup(line + strlen(first_column) + 1);
             data[size].key = key;
             data[size].value = value;
             size++;
         }
         fclose(file);
-        qsort(data, size, sizeof(struct Data), compare);
+        qsort(data, size, sizeof(struct Data), compare); // sort = sort the dates given automatically 
 
         // Save the data in ascending order
         strcat(name,argv[2]);
@@ -292,16 +293,6 @@ int main(int argc, char *argv[]) {
             }
         }
         fclose(outfile);
-
-        // Save the data in descending order
-        /*outfile = fopen("data_descending_lineaire.csv", "w");
-        fprintf(outfile, "%s", first_line);
-        for (int i = size - 1; i >= 0; i--) {
-            fprintf(outfile, "%s", data[i].value);
-        }
-        fclose(outfile);
-        free(data);
-        free(first_line);*/
         return 0;
     }
     else{
@@ -309,4 +300,3 @@ int main(int argc, char *argv[]) {
         return 3;
     }
 }
-    
