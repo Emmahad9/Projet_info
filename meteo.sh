@@ -203,13 +203,17 @@ fi
 ###gensub = permet de changer le format des dates ##
 ## awk est une fonction de shell qui permet de traiter les fichiers csv lignes par lignes, l'option -F permet de definir le séparateur #
 ####################################################################### MAIN ###########################################################
+# We are going to loop over all the data argument & apply the correct set of command  
 for var in $data_args_true; do
-    if [ $var == $temperature1 ]; then
+    if [ $var == $temperature1 ]; then #For t1
+        #We use AWK to treat csv files & retrieve mean,max & min temperature
         awk -F ";" 'NR==1{print $1,",Température moyenne",",Temperature maximal",",Température minimal"; next}
         NR==FNR && FNR>1{arr[$1]+=$11;count[$1]+=1;if(max[$1]<$11){max[$1]=$11;};if(!($1 in min) || (min[$1]>0+$11 && ($11 != ""))){min[$1]=0+$11;};} 
         END {for (i in arr) {print i","arr[i]/count[i]","max[i]","min[i]}}' $fichier_temp > tri_"${var:1}".csv
+        #We call main file (object files) to sort the data
         ./Src/main "$tri_args_true" -f tri_"${var:1}".csv -o sorted_tri_"${var:1}".csv
         echo Affichage des temperature t1
+        #We use GNUPLOT to plot the temperature mean max & min using filled curve & lines
         #gnuplot -p -e "set datafile separator ',';set nokey; set title 'Température moyenne et la différence entre le Maximal & Minimal par Station';set nokey; set xlabel 'ID Station';set ylabel 'Temperature'; set style fill pattern 4; set autoscale; ; plot 'sorted_tri_t1.csv' using 1:2:(column(3)-column(4)) with yerrorbars, 'sorted_tri_t1.csv' using 1:2 with lines"
         gnuplot -p -e "set datafile separator ',';Shadecolor = '#80E0A080';set nokey; set title 'Température moyenne et la différence entre le Maximal & Minimal par Station';set nokey; set xlabel 'ID Station';set ylabel 'Temperature'; set autoscale; plot 'sorted_tri_t1.csv' using 1:(column(2)-(column(3)-column(4))):(column(2)+(column(3)-column(4))) with filledcurve fc rgb Shadecolor title 'Shaded error region', '' using 1:2 with lines lw 2"
 
@@ -217,7 +221,8 @@ for var in $data_args_true; do
     fi
 
     #we have a problem with the minimum 
-    if [ $var == $pression1 ]; then
+    if [ $var == $pression1 ]; then #for p1
+        #Same as t1
         awk -F ";" 'NR==1{print $1,",Pression moyenne",",Pression maximal",",Pression minimal"; next}
         NR==FNR && FNR>1{arr[$1]+=$7;count[$1]+=1;if(max[$1]<$7){max[$1]=$7;};if(!($1 in min) || (min[$1]>0+$7 && ($7 != ""))){min[$1]=0+$7;};} 
         END {for (i in arr) {print i","arr[i]/count[i]","max[i]","min[i]}}' $fichier_temp > tri_"${var:1}".csv
@@ -228,10 +233,12 @@ for var in $data_args_true; do
     fi
 
     if [ $var == $temperature2 ]; then
+    ### We use awk to treat csv file by line. To compare the dates, we use Mktime & gensub to transform the date to seconds so they are usable
     awk -F ";" 'NR==1{print $2,",Température moyenne"; next}
         NR==FNR && FNR>1{arr[$2]+=$11;count[$2]+=1;f="\\1 \\2 \\3 \\4 \\5 \\6 \\7"} 
         END {for (i in arr) {j=mktime(gensub(/(....)-(..)-(..)T(..):(..):(..)([+-].*)/, f, "g", i));print j","arr[i]/count[i]}}' $fichier_temp > tri_"${var:1}".csv
         ./Src/main "$tri_args_true" -f tri_"${var:1}".csv -o sorted_tri_"${var:1}".csv
+        # We transform the seconds to date using strftile
         awk -F, 'NR==1{print "Date",",Température moyenne"; next} NR==FNR && FNR>1{ 
           timestamp=$1;
           time_string=strftime("%Y-%m-%d %H:%M:%S", timestamp);
@@ -242,6 +249,7 @@ for var in $data_args_true; do
     fi
   
     if [ $var == $pression2 ]; then
+    #same as t2
     awk -F ";" 'NR==1{print $2,",Pression moyenne"; next}
         NR==FNR && FNR>1{arr[$2]+=$7;count[$2]+=1;f="\\1 \\2 \\3 \\4 \\5 \\6 \\7"} 
         END {for (i in arr) {j=mktime(gensub(/(....)-(..)-(..)T(..):(..):(..)([+-].*)/, f, "g", i));print j","arr[i]/count[i]}}' $fichier_temp > tri_"${var:1}".csv
@@ -269,12 +277,13 @@ for var in $data_args_true; do
     fi
 
 
-    if [ $var == $altitude ]; then
+    if [ $var == $altitude ]; then #We use awk for latitude & longitude
         awk -F ";" 'NR==1{print $1,",",$14,",Latitude",",Longitude"; next}
         NR==FNR && FNR>1{arr[$1]=$14;split($10,a,",");lat[$1]=a[1];lon[$1]=a[2]} 
         END {for (i in arr) {print i","arr[i]","lat[i]","lon[i]}}' $fichier_temp > tri_"${var:1}".csv
         ./Src/main "$tri_args_true" -f tri_"${var:1}".csv -o sorted_tri_"${var:1}".csv -r
         echo Affichage de la carte altitude
+        #We use viewmap & pm3d to interpolate the data we don't have
         gnuplot -p -e "set datafile separator ',' ; set nokey;set xlabel 'Longitude';set ylabel 'Latitude'; set title 'HeatMap Altitude';set view map;set autoscale fix;set pm3d at b map;set dgrid3d 200,200,1; splot 'sorted_tri_h.csv' using (column(4)):(column(3)):(column(2))"
         #rm *tri_h*
     fi  
@@ -285,6 +294,7 @@ for var in $data_args_true; do
         END {for (i in max) {print i","max[i]","lat[i]","lon[i]}}' $fichier_temp > tri_"${var:1}".csv
         ./Src/main "$tri_args_true" -f tri_"${var:1}".csv -o sorted_tri_"${var:1}".csv -r
         echo Affichage de la carte humidite
+        #We use viewmap & pm3d to interpolate the data we don't have
         gnuplot -p -e "set datafile separator ',' ; set nokey; set xlabel 'Longitude';set ylabel 'Latitude'; set title 'HeatMap Humidité';set view map;set autoscale fix;set pm3d at b map;set dgrid3d 200,200,1; splot 'sorted_tri_m.csv' using (column(4)):(column(3)):(column(2))"
         #rm *tri_m*
 
@@ -296,6 +306,7 @@ for var in $data_args_true; do
         END {for (i in direction) {print i","direction[i]/count[i]","vitesse[i]/count[i]","lat[i]","lon[i]}}' $fichier_temp > tri_"${var:1}".csv;
         ./Src/main "$tri_args_true" -f tri_"${var:1}".csv -o sorted_tri_"${var:1}".csv
         echo Affichage de la carte des vents
+        #We do calculation from direction & angle to calculate the vectors
         gnuplot -p -e "set datafile separator ',';set nokey;set xlabel 'Longitude';set ylabel 'Latitude';set title 'Carte des vents';xf(phi,len) = len*cos(phi/180.0*pi+pi/2);yf(phi,len) = len*sin(phi/180.0*pi+pi/2); plot 'sorted_tri_w.csv' using (column(5)):(column(4)):((xf(column(2),column(3)))):((yf(column(2),column(3)))):3 with vectors head size 2,20,60;"
         #rm *tri_w*
 
