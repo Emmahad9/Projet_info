@@ -228,7 +228,6 @@ int main(int argc, char *argv[]) {
         struct Node_AVL *root = NULL;
         char line[1024];
         char name[1024] = "sorted_";
-        //fgets(line, 1024, file); // Read and discard the first line
         //read the file line by line
         while (fgets(line, 1024, file)) {
             char *first_column = strtok(line, ",");
@@ -237,7 +236,7 @@ int main(int argc, char *argv[]) {
             root = insert_AVL(root, key, value);
         }
         fclose(file);
-        strcat(name,argv[2]); // strcat = allows you to add to an existing string the content of a second
+        strcat(name,argv[2]); 
         // Save the data in ascending order
         if (ascending == 0){
             saveToCSV_AVL(root, output, inOrder_AVL);
@@ -255,7 +254,6 @@ int main(int argc, char *argv[]) {
         FILE *file = fopen(input, "r");
         char line[1024];
         char name[1024] = "sorted_";
-        //fgets(line, 1024, file); // Read and discard the first line
         //read the file line by line
         while (fgets(line, 1024, file)) {
             char *first_column = strtok(line, ",");
@@ -269,7 +267,7 @@ int main(int argc, char *argv[]) {
         return 0;
     }
     /*******************TAB****************************/
-    else if (strcmp(tri_type,"--tab") == 0 ){ // strcmp = allows you to compare two strings
+    else if (strcmp(tri_type,"--tab") == 0 ){ 
         FILE *file = fopen(input, "r");
         char line[1024];
         int size = 0;
@@ -278,15 +276,15 @@ int main(int argc, char *argv[]) {
         char name[1024] = "sorted_";
         int i = 0;
         //read the file line by line
-        while (fgets(line, 1024, file)) { //fgets = allows you to read the content of a string from a
+        while (fgets(line, 1024, file)) { 
             if (i == 0) {
-                first_line = strdup(line);// strdup = allocates a new memory area via the malloc function in order to copy the initial string
+                first_line = strdup(line);
                 i++;
                 continue;
             }
-            data = realloc(data, (size + 1) * sizeof(struct Data)); //realloc = allows you to dynamically allocate memory
+            data = realloc(data, (size + 1) * sizeof(struct Data)); 
             char *first_column = strtok(line, ",");
-            int key = atoi(strtok(line, ",")); //atoi = transforms a string into a numeric value
+            int key = atoi(strtok(line, ",")); 
             char *value = strdup(line + strlen(first_column) + 1);
             data[size].key = key;
             data[size].value = value;
@@ -294,7 +292,7 @@ int main(int argc, char *argv[]) {
         }
         fclose(file);
         //sorting of table data
-        qsort(data, size, sizeof(struct Data), compare); // sort = sort the dates given automatically 
+        qsort(data, size, sizeof(struct Data), compare); 
 
         // Save the data in ascending order
         strcat(name,argv[2]);
