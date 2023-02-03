@@ -60,9 +60,9 @@ Il est aussi nécessaire d'avoir la fonction gawk à jour. Si ce n'est pas le ca
 ```
 sudo apt-get install gawk
 ```
- Pour toutes compilations il est préférable de suivre la méthode suivante
+ Pour toutes compilations, il est préférable de suivre la méthode suivante
 ```
-./meteo.sh -f data.csv - les options que vous souhaitez
+./meteo.sh -f data.csv -les options que vous souhaitez
 ```
 Production des altitudes (-h) & des cartes de vents (-w) en France (-F) sur toute la période
 ```
