@@ -246,6 +246,7 @@ int main(int argc, char *argv[]) {
         }
         // Save the data in descending order
         //saveToCSV(root, "data_descending.csv", reverseInOrder);
+        free(root);
         return 0;
     }
     /************************BST Main*********************/
@@ -264,6 +265,7 @@ int main(int argc, char *argv[]) {
         strcat(name,argv[2]);
         saveToCSV_BST(root, output,ascending);
         fclose(file);
+        free(root);
         return 0;
     }
     /*******************TAB****************************/
@@ -309,6 +311,7 @@ int main(int argc, char *argv[]) {
             }
         }
         fclose(outfile);
+        free(data);
         return 0;
     }
     else{
