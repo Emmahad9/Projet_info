@@ -28,7 +28,7 @@ Ces options sont exclusives entre elles. Cela signifie qu’une seule option à 
 - option -O : (O)céan indien.
 - option -Q : antarcti(Q)ue.
 
-Cependant, si l'option que vous mettez lors de la compilation est différente de celle ci-dessus le programme ne la comptera pas et compilera comme si vous n'aviez pas mis d'option. Alors compilera de manière général (cas général).
+Cependant, si l'option que vous mettez lors de la compilation est différente de celles ci-dessus le programme ne la comptera pas et compilera comme si vous n'aviez pas mis d'option. Alors compilera de manière général (cas général).
 
 ## Specifications temporelles
 Il est possible d’indiquer un intervalle temporel pour filtrer les données de mesures. Seules les mesures dans l’intervalle de temps seront traitées. Cette option n’est pas obligatoire : il n’y aura alors pas de limitation temporelle sur les mesures traitées. 
